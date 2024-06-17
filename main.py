@@ -6,7 +6,16 @@ class State:
 
 class ReadState(State):
     def main(self):
-        print("Reading")
+        return self.read()
+
+    def read(self):
+        yn = input("Water correct level?: ")
+        if yn == "no":
+            print("Switch to FillWaterState")
+            return 1
+        else: 
+            return 0
+
 
 class FillWaterState(State):
     def main(self):
@@ -22,7 +31,7 @@ class StateHandler:
         self.lastState = self.activeState
 
     def main(self):
-        self.activeState.main()
+        return self.activeState.main()
 
     def changeState(self, newState):
         self.lastState = self.activeState
@@ -31,7 +40,8 @@ class StateHandler:
 stateHandler = StateHandler()
 
 while True:
-    stateHandler.main()
+    stateNumber = stateHandler.main()
+    print(stateNumber)
     time.sleep(1)
     yn = input("Do you want to keep reading?: ")
     if(yn == "no"):
